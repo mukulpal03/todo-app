@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useContext, useEffect, useState } from 'react'
 
 export interface ColorScheme {
   bg: string;
@@ -97,7 +97,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    // get the user's choice
     AsyncStorage.getItem("darkMode").then((value) => {
       if (value) setIsDarkMode(JSON.parse(value));
     });
@@ -119,7 +118,13 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 };
 
 const useTheme = () => {
-  
+  const context = useContext(ThemeContext);
+
+  if(!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+
+  return context
 }
 
 export default useTheme
