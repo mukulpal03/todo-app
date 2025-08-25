@@ -1,24 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
+import { createHomeStyles } from "@/assets/styles/home.styles";
+import useTheme, { ColorScheme } from "@/hooks/useTheme";
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
+  const { toggleDarkMode, colors } = useTheme();
+
+  const styles = createHomeStyles(colors);
+
   return (
-    <View
-      style={styles.container}
+    <SafeAreaView
+      style={styles.safeArea}
     >
-      <Text style={styles.text}>Edit app/index.tsx to edit this screen.</Text>
-    </View>
+      <TouchableOpacity onPress={toggleDarkMode}>
+        <Text>Toggle dark mode</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    fontSize: 16,
-    color: "#333",
-  },
-});
